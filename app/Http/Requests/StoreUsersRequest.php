@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreBlogPost extends FormRequest
+class StoreUsersRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +24,9 @@ class StoreBlogPost extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|unique:blogs|max:20',
-            'description' => 'required',
-            'category_id' => 'required'
+            'name' => 'required|unique:users|min:3',
+            'email' => 'required',
+            'password' => 'required'
         ];
     }
     public function messages()
@@ -34,9 +34,9 @@ class StoreBlogPost extends FormRequest
         return  [
                 'name.required' => 'Vui lòng không được để trống',
                 'name.unique'   => 'Vui lòng không được trùng dữ liệu',
-                'name.max'      => 'Vui lòng không nhập quá :max kí tự',
-                'description.required' => 'Vui lòng không được để trống',
-                'category_id.required' => 'Vui lòng không được để trống'
+                'name.min'      => 'Vui lòng nhập trên :min kí tự',
+                'email.required' => 'Vui lòng không được để trống',
+                'password.required' => 'Vui lòng không được để trống',
             ];
     }
 }

@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreCategoriesRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Category;
-
-
+use Illuminate\Console\View\Components\Alert;
 
 class CategoryController extends Controller
 {
@@ -17,10 +17,10 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $items = DB::table('categories')->get();//Query builder
+        $items = Category::all();//Query builder
 
         // dd($items->toArray());
-        return view('category.index', compact(['items']));
+        return view('categories.index', compact('items'));
     }
 
     /**
@@ -30,7 +30,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('category.create');
+        return view('categories.create');
 
     }
 
@@ -40,14 +40,21 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreCategoriesRequest $request)
     {
-        $category = new Category();
-        $category->name = $request->name;
-        $category->description = $request->description;
+        try {
+            $category = new Category();
+            $category->name = $request->name;
+            $category->description = $request->description;
 
-        $category->save();
-        return redirect()->route('category.index');
+            $category->save();
+            alert()->success('Thêm danh mục','thành công');
+            return redirect()->route('category.index');
+        } catch (\Throwable $th) {
+            alert()->error('Thêm danh mục','không thành công');
+
+        }
+
     }
 
     /**
@@ -59,7 +66,7 @@ class CategoryController extends Controller
     public function show($id)
     {
 
-        return view('category.show');
+        return view('categories.show');
     }
 
     /**
@@ -71,7 +78,7 @@ class CategoryController extends Controller
     public function edit($id)
     {
   $category = Category::find($id);
-    return view('category.edit', compact ('category'));
+    return view('categories.edit', compact ('category'));
         // return view('category.edit');
 
     }
@@ -85,13 +92,21 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $category = new Category();
-        $category = Category::find($id);
-        $category->name = $request->name;
-        $category->description = $request->description;
+        try {
+            $category = new Category();
+            $category = Category::find($id);
+            $category->name = $request->name;
+            $category->description = $request->description;
 
-        $category->save();
-        return redirect()->route('category.index');
+            $category->save();
+            alert()->success('Cập nhật','thành công');
+
+            return redirect()->route('category.index');
+        } catch (\Throwable $th) {
+            alert()->error('Cập nhật','không thành công');
+
+        }
+
     }
 
     /**
@@ -102,10 +117,15 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        $category = Category::find($id);
+        try {
+            $category = Category::find($id);
         $category->delete();
+        alert()->success('xoá danh mục','thành công');
         return redirect()->route('category.index');
+        } catch (\Throwable $th) {
+            alert()->error('xoá danh mục','không thành công');
+            return redirect()->route('category.index');
+        }
     }
-
     }
 

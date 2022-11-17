@@ -13,6 +13,7 @@
 <main id="main">
 <body>
 <h2>Category</h2>
+@include('sweetalert::alert')
 <table style="width:100%" class="table">
 <a href="{{route('category.create')}}" class="btn btn-success">Thêm mới</a>
     <tr>
@@ -39,10 +40,10 @@
                 <a href="{{ route('category.edit', $value->id) }}"
                     class="btn btn-sm btn-icon btn-secondary"><i
                         class="bi bi-pencil-square"></i></a>
-                        <form action="{{ route('category.destroy', $value->id) }}"
-                            style="display:inline" method="post">
+                        <form onclick="return confirm('Bạn có chắc chắn muốn xoá không?')" action="{{ route('category.destroy', $value->id) }}"
+                            style="display:inline"  method="post">
                 <button
-                    type="submit" class="btn btn-sm btn-icon btn-secondary"><i
+                    type="submit"  class="btn btn-sm btn-icon btn-secondary"><i
                         class="bi bi-trash"></i></button>
                 @csrf
                 @method('DELETE')
