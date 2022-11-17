@@ -6,9 +6,9 @@
 <form action="{{route('category.update',$category->id)}}" method="POST">
     @method('PUT')
     @csrf
-    <label for="fname">First name:</label><br>
+    <label for="fname">Name</label><br>
     <input type="text" id="fname" name="name" value='{{$category->name}}'><br>
-    <label for="lname">Last name:</label><br>
+    <label for="lname">Description</label><br>
     <input type="text" id="lname" name="description" value='{{$category->description}}'><br><br>
     <input type="submit" value="Submit">
   </form>

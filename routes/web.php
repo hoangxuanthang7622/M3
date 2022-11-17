@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CategoryController;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,4 +23,5 @@ Route::resource('category', CategoryController::class);
 
 
 Route::resource('blog', BlogController::class);
+
 

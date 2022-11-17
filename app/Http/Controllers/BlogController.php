@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Blog;
+use App\Http\Requests\StoreBlogPost;
 
 
 
@@ -17,7 +18,8 @@ class BlogController extends Controller
      */
     public function index()
     {
-        $items = DB::table('blogs')->get();//Query builder
+        $items = Blog::with('category')->get();//Query builder
+
         // dd($items->toArray());
         return view('blog.index', compact(['items']));
 
@@ -30,7 +32,8 @@ class BlogController extends Controller
      */
     public function create()
     {
-        return view('blog.create');
+        $categories = DB::table('categories')->get();
+        return view('blog.create', compact(['categories']));
 
     }
 
@@ -40,12 +43,26 @@ class BlogController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreBlogPost $request)
     {
+    //     $validated = $request->validate([
+    //         'name' => 'required|unique:blogs|max:20',
+    //         'description' => 'required',
+    //         'category_id' => 'required'
+    //     ],
+    //     [
+    //         'name.required' => 'Vui lòng không được để trống',
+    //         'name.unique'   => 'Vui lòng không được trùng dữ liệu',
+    //         'name.max'      => 'Vui lòng không nhập quá :max kí tự',
+    //         'description.required' => 'Vui lòng không được để trống',
+    //         'category_id.required' => 'Vui lòng không được để trống',
+
+    //     ]
+    // );
         $blog = new Blog();
         $blog->name = $request->name;
         $blog->description = $request->description;
-        $blog->description = $request->description;
+        $blog->category_id = $request->category_id;
 
         $blog->save();
         return redirect()->route('blog.index');
@@ -59,7 +76,8 @@ class BlogController extends Controller
      */
     public function show($id)
     {
-        //
+        return view('blog.show');
+
     }
 
     /**
@@ -70,7 +88,8 @@ class BlogController extends Controller
      */
     public function edit($id)
     {
-        //
+        $blog = Blog::find($id);
+        return view('blog.edit', compact ('blog'));
     }
 
     /**
@@ -82,7 +101,13 @@ class BlogController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $blog = new Blog();
+        $blog = Blog::find($id);
+        $blog->name = $request->name;
+        $blog->description = $request->description;
+
+        $blog->save();
+        return redirect()->route('blog.index');
     }
 
     /**
@@ -93,6 +118,8 @@ class BlogController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $blog = Blog::find($id);
+        $blog->delete();
+        return redirect()->route('blog.index');
     }
 }

@@ -1,6 +1,5 @@
 @extends('layout.master')
 @section('content')
-<main id="main">
     <!DOCTYPE html>
 <html>
 <style>
@@ -11,15 +10,16 @@
                 }
 
 </style>
+<main id="main">
 <body>
-<h2>category</h2>
+<h2>Category</h2>
 <table style="width:100%" class="table">
 <a href="{{route('category.create')}}" class="btn btn-success">Thêm mới</a>
     <tr>
     <th>id</th>
-    <th>Name</th>
-    <th>Description</th>
-    <th>Action</th>
+    <th>Tên danh mục</th>
+    <th>Mô tả</th>
+    <th>Tuỳ chỉnh</th>
     </tr>
     @foreach ($items as $key => $value )
     <tr>
