@@ -19,7 +19,7 @@
         <input type="text" id="fname" name="password" value='{{$user->password}}' class="form-control">
     </div>
     <input type="submit" value="Cập nhật" class="btn btn-primary">
-    <a href="{{route('users.index')}}" class="btn btn-danger">Huỷ</a>
+    <a href="{{route('user.index')}}" class="btn btn-danger">Huỷ</a>
 
   </form>
   </main>

@@ -12,10 +12,8 @@
 </style>
 <main id="main">
 <body>
-<h2>Product</h2>
 
 @include('sweetalert::alert')
-
 <table style="width:100%" class="table">
 <a href="{{route('product.create')}}" class="btn btn-success">Thêm mới</a>
 
@@ -28,6 +26,7 @@
     <th>Mô tả</th>
     <th>Tuỳ chỉnh</th>
     </tr>
+
     @foreach ($items as $key => $value )
     <tr>
         <td>
@@ -40,7 +39,7 @@
             {{$value->category->name}}
          </td>
          <td>
-            {{$value->price}}
+            {{ number_format($value->price)}} VND
          </td>
          <td>
             <img src="{{ asset('storage/images/' . $value->image) }}"  style="width:100px;">
@@ -71,10 +70,12 @@
     @endforeach
 
   </table>
+
 </body>
 </html>
+
+{!! $items->withQueryString()->links('pagination::bootstrap-5') !!}
 
 </main>
 
 @endsection
-{{ $items->links() }}

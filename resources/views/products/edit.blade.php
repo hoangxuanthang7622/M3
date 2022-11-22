@@ -24,15 +24,21 @@
         <input type="text" id="fname" name="price" value='{{$product->price}}' class="form-control">
     </div>
     <div class="mb-3">
-        <label class="form-label">Hình ảnh</label>
-        <input type="text" id="fname" name="image" value='{{$product->image}}' class="form-control">
-    </div>
-    <div class="mb-3">
         <label class="form-label">Mô tả</label>
         <input type="text" id="fname" name="description" value='{{$product->description}}' class="form-control">
     </div>
+ 
+    <div class="form-group">
+        <label for="inputTitle">Ảnh Sản Phẩm</label><br>
+        <input accept="image/*" type='file' id="imgInp" name="image" /><br><br>
+        <img type="hidden" width="90px" height="90px" id="blah1"
+            src="{{ asset('storage/images/' .$product->image) ?? $request->inputFile }}" alt="" /> <br>
+        {{-- @error('inputFile')
+            <div class="alert alert-danger">{{ $message }}</div>
+        @enderror --}}
+    </div>
     <input type="submit" value="Cập nhật" class="btn btn-primary">
-    <a href="{{route('products.index')}}" class="btn btn-danger">Huỷ</a>
+    <a href="{{route('product.index')}}" class="btn btn-danger">Huỷ</a>
 
   </form>
   </main>

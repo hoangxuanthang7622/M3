@@ -18,12 +18,12 @@ class CategoryTableSeeder extends Seeder
     {
         DB::table('categories')->insert([
             [
-                'description' => 'Van hoc',
-                'name' => 'Van hoc',
+                'description' => 'Acer',
+                'name' => 'Laptop',
             ],
             [
-                'description' => 'vat ly',
-                'name' => 'vat ly',
+                'description' => 'Iphone 14',
+                'name' => 'Điện thoại',
             ]
         ]);
     }

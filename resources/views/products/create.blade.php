@@ -32,17 +32,19 @@
                 @enderror
             </div>
             <div class="mb-3">
-                <label class="form-label">Hình ảnh</label>
-                <input type="file" id="fname" name="image" class="form-control">
-                @error('image')
-                    <div style="color: red">{{ $message }}</div>
-                @enderror
-            </div>
-            <div class="mb-3">
                 <label class="form-label">Mô tả</label>
                 <input type="text" id="fname" name="description" class="form-control">
                 @error('description')
-                    <div style="color: red">{{ $message }}</div>
+                <div style="color: red">{{ $message }}</div>
+                @enderror
+            </div>
+            <div class="form-group">
+                <label for="inputTitle">Ảnh Sản Phẩm</label><br>
+                <input accept="image/*" type='file' id="imgInp" name="inputFile" /><br><br>
+                <img type="hidden" width="90px" height="90px" id="blah"
+                    src="" alt="" /> <br>
+                @error('inputFile')
+                    <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
             </div>
             <input type="submit" value="lưu" class="btn btn-success">

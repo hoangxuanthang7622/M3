@@ -28,7 +28,7 @@ class StoreProductsRequest extends FormRequest
             'category_id' => 'required',
             'price' => 'required',
             'description' => 'required',
-            'image' => 'required'
+            'inputFile' => 'required'
         ];
     }
     public function messages()
@@ -40,7 +40,7 @@ class StoreProductsRequest extends FormRequest
                 'description.required' => 'Vui lòng không được để trống',
                 'price.required' => 'Vui lòng không được để trống',
                 'category_id.required' => 'Vui lòng không được để trống',
-                'image.required' => 'Vui lòng không được để trống'
+                'inputFile.required' => 'Vui lòng không được để trống'
             ];
     }
 }

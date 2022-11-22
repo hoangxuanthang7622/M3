@@ -6,6 +6,7 @@ use App\Http\Requests\StoreProductsRequest;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class ProductController extends Controller
 {
@@ -14,12 +15,11 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index( request $request)
     {
-        $items = Product::with('category')->paginate(5);
+        $keyword = $request->input('query');
+        $items = Product::with('category')->where('name', 'LIKE', '%' . $keyword . '%')->paginate(5);
         return view('products.index',compact('items'));
-        // $products = Product::paginate(5);
-        // $categories = Category::all();
 
     }
 
@@ -41,27 +41,33 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(StoreProductsRequest $request)
-    {
+{
+
+        // dd($request->all());
         try {
             $product = new Product();
             $product->name = $request->name;
             $product->category_id = $request->category_id;
             $product->price = $request->price;
+            // $product->image = $request->image;
             $product->description = $request->description;
-            $file = $request->image;
+            $file = $request->inputFile;
 
-            if ($request->hasFile('image')) {
+            if ($request->hasFile('inputFile')) {
                 $fileExtension = $file->getClientOriginalName();
                 //Lưu file vào thư mục storage/app/public/image với tên mới
-                $request->file('image')->storeAs('public/images', $fileExtension);
+                $request->file('inputFile')->storeAs('public/images', $fileExtension);
                 // Gán trường image của đối tượng task với tên mới
                 $product->image = $fileExtension;
+
             }
             $product->save();
             alert()->success('Thêm sản phẩm','thành công');
             return redirect()->route('product.index');
-        } catch (\Throwable $th) {
+        } catch (\Exception $e) {
+            Log::error('message: ' . $e->getMessage() . ' line: ' . $e->getLine() . ' file: ' . $e->getFile());
             alert()->error('Thêm sản phẩm','không thành công');
+            return redirect()->route('product.index');
         }
     }
 
@@ -105,7 +111,15 @@ class ProductController extends Controller
             $product->price = $request->price;
             $product->image = $request->image;
             $product->description = $request->description;
+            $file = $request->image;
 
+            if ($request->hasFile('image')) {
+                $fileExtension = $file->getClientOriginalName();
+                //Lưu file vào thư mục storage/app/public/image với tên mới
+                $request->file('image')->storeAs('public/images', $fileExtension);
+                // Gán trường image của đối tượng task với tên mới
+                $product->image = $fileExtension;
+            }
             $product->save();
             alert()->success('Cập nhật','thành công');
 

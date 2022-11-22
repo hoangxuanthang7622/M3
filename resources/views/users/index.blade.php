@@ -12,7 +12,6 @@
 </style>
 <main id="main">
 <body>
-<h2>User</h2>
 @include('sweetalert::alert')
 
 <table style="width:100%" class="table">
@@ -21,7 +20,6 @@
     <th>id</th>
     <th>Tên nhân viên</th>
     <th>Email</th>
-    <th>Mật khẩu</th>
     <th>Tuỳ chỉnh</th>
     </tr>
     @foreach ($user as $key => $value )
@@ -35,9 +33,7 @@
          <td>
             {{$value->email}}
          </td>
-         <td>
-            {{$value->password}}
-         </td>
+
          <td>
 
                  {{-- <a href="{{ route('categories.show', $value->id) }}"

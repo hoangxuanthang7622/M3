@@ -27,7 +27,7 @@
     @enderror
     </div>
     <input type="submit" value="Lưu" class="btn btn-success">
-    <a href="{{route('users.index')}}" class="btn btn-danger">Huỷ</a>
+    <a href="{{route('user.index')}}" class="btn btn-danger">Huỷ</a>
 
   </form>
   </main>

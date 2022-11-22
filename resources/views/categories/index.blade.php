@@ -12,7 +12,6 @@
 </style>
 <main id="main">
 <body>
-<h2>Category</h2>
 @include('sweetalert::alert')
 <table style="width:100%" class="table">
 <a href="{{route('category.create')}}" class="btn btn-success">Thêm mới</a>
